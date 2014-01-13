@@ -50,7 +50,6 @@ class WatchInternals {
     }
 };
   
-//pure virtual class to enforce functions that all watches must have
 class IWatchFace {
   public:
     virtual ~IWatchFace() {}
@@ -72,16 +71,16 @@ class WatchFace1 : public IWatchFace, public WatchInternals {
     int originX, originY;
   public:
     WatchFace1(unsigned int hours, unsigned int minutes, unsigned int seconds) : WatchInternals(hours, minutes, seconds){
-      canvasHeight = canvasWidth = 300;
+      canvasHeight = canvasWidth = 3000;
       this->watchCanvas = new pngwriter(canvasWidth, canvasHeight, 1.0, "WatchFace1");
       originX = canvasWidth/2;
       originY = canvasHeight/2;
 
-      facePlateRadius = 100;
+      facePlateRadius = 0.48*canvasHeight;
       
-      secondHandRadius = 95;
-      minuteHandRadius = 85;
-      hourHandRadius = 60;
+      secondHandRadius = 0.95*facePlateRadius;
+      minuteHandRadius = 0.90*secondHandRadius;
+      hourHandRadius = 0.60*secondHandRadius;
     }
     
     ~WatchFace1(){
@@ -98,7 +97,7 @@ class WatchFace1 : public IWatchFace, public WatchInternals {
     
     void drawFacePlate(){
       watchCanvas->filledcircle(originX, originY, facePlateRadius, 0, 0, 0);
-      watchCanvas->filledcircle(originX, originY, facePlateRadius-10, 50000, 50000, 50000);
+      watchCanvas->filledcircle(originX, originY, 0.98*facePlateRadius, 50000, 50000, 50000);
     }
            
     void drawSecondsHand(){
@@ -132,7 +131,6 @@ class WatchFace1 : public IWatchFace, public WatchInternals {
     double rad(int angleInDegrees){
       return (double)((3.14159/180.0)*angleInDegrees);
     }
-
 };
 
 int main(int argc, char* argv[]){
