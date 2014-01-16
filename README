@@ -1,1 +1,1 @@
-A simple watch with a skinnable UI (face, hands etc).
+A simple watch that outputs a PNG file, using the PNGWriter library. Includes three example skin classes.
