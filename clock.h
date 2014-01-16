@@ -6,12 +6,15 @@
 using namespace std;
 
 class WatchInternals {
-    unsigned int currentHours, currentMinutes, currentSeconds;
+    struct tm *timeNow;
   public:
-    WatchInternals(unsigned int hours, unsigned int minutes, unsigned int seconds);
-    unsigned int getHours();
-	unsigned int getMinutes();
-    unsigned int getSeconds();
+    WatchInternals();
+    int getHours();
+  	int getMinutes();
+    int getSeconds();
+    int getDay();
+    int getMonth();
+    int getYear();
     bool isAfterNoon();
     void tick();
     void printTime();

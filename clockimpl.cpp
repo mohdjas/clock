@@ -1,42 +1,43 @@
 #include "clock.h"
 
-WatchInternals::WatchInternals(unsigned int hours, unsigned int minutes, unsigned int seconds){
-  this->currentHours = hours;
-  this->currentMinutes = minutes;
-  this->currentSeconds = seconds;
+WatchInternals::WatchInternals(){
+  time_t t = time(0);
+  timeNow = localtime(&t);
 }
   
-unsigned int WatchInternals::getHours(){
-  return this->currentHours;
+int WatchInternals::getHours(){
+  return timeNow->tm_hour;
 }
     
-unsigned int WatchInternals::getMinutes(){
-  return this->currentMinutes;
+int WatchInternals::getMinutes(){
+  return timeNow->tm_min;
 }
     
-unsigned int WatchInternals::getSeconds(){
-  return this->currentSeconds;
+int WatchInternals::getSeconds(){
+  return timeNow->tm_sec;
+}
+
+int WatchInternals::getDay(){
+  return timeNow->tm_mday - 1;
+}
+
+int WatchInternals::getMonth(){
+  return timeNow->tm_mon;
+}
+
+int WatchInternals::getYear(){
+  return timeNow->tm_year+1900; //since tm_year stores years since 1900
 }
     
 bool WatchInternals::isAfterNoon(){
-  return this->currentHours >= 12;
+  return getHours() >= 12;
 }
-    
+
 void WatchInternals::tick(){
-  currentSeconds++;
-  if (currentSeconds >= 60) {
-    currentMinutes++;
-    currentSeconds = 0;
-  }
-  if (currentMinutes >= 60) {
-    currentHours++;
-    currentMinutes = 0;
-  }
-  if (currentHours >= 24) {
-    currentHours = 0;
-  }
+  time_t t = time(0);
+  timeNow = localtime(&t);
 }
     
 void WatchInternals::printTime(){
-      cout << currentHours << ":" << currentMinutes << ":" << currentSeconds << endl;
+      cout << getHours() << ":" << getMinutes() << ":" << getSeconds() << endl;
 }
