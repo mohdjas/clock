@@ -1,6 +1,10 @@
 pngClock : skins.o clockimpl.o clock.o
 	@echo "making executable program 'pngClock'..."
 	@g++ -o pngClock skins.o clockimpl.o clock.o -lpngwriter -lpng -lfreetype
+	@echo "cleaning ..."
+	@rm *.o
+	@echo "Compilation successfull."
+	@echo "you can now execute the program by using './pngClock'"
 skins.o : skins.cpp skins.h
 	@echo "compiling 'skins'..."
 	@g++ -c skins.cpp
